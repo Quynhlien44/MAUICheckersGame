@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MAUICheckersGame.MVVM.ViewModels"
+             xmlns:local="clr-namespace:MAUICheckersGame.MVVM"
+             x:Class="MAUICheckersGame.MVVM.Views.CheckersGame"
+             Title="{Binding Title}"
+             BackgroundColor="#f0f0f0">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:BooleanInverterConverter x:Key="BooleanInverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <vm:CheckersGameViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <Label Text="{Binding CurrentTurnDisplay}"
+               FontSize="24"
+               HorizontalOptions="Center"
+               TextColor="Black"
+               Margin="0,0,0,20" />
+            <Grid x:Name="BoardGrid"
+              RowSpacing="0"
+              ColumnSpacing="0"
+              HorizontalOptions="Center"
+              VerticalOptions="Center"
+              HeightRequest="400"
+              WidthRequest="400"
+              IsEnabled="{Binding IsGameOver, Converter={StaticResource BooleanInverter}}">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <!-- Game Over Popup -->
+            <Frame x:Name="GameOverPopup" 
+               IsVisible="{Binding IsGameOver}"
+               BackgroundColor="White"
+               BorderColor="Gray"
+               CornerRadius="10"
+               Padding="20"
+               Margin="50,20"
+               HorizontalOptions="Center">
+                <StackLayout>
+                    <Label Text="{Binding GameOverMessage}"
+                       FontSize="24"
+                       HorizontalOptions="Center"
+                       TextColor="Black"
+                       Margin="0,0,0,20"/>
+                    <Button Text="Play Again"
+                        Command="{Binding PlayAgainCommand}"
+                        BackgroundColor="Green"
+                        TextColor="White"
+                        WidthRequest="150"
+                        HeightRequest="50"
+                        HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
